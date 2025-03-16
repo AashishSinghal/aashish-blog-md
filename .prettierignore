@@ -1,0 +1,21 @@
+# Ignore artifacts:
+.next
+build
+coverage
+node_modules
+public
+out
+.vercel
+.github
+.vscode
+.husky
+.git
+
+# Ignore files:
+*.min.js
+*.d.ts
+next-env.d.ts
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
