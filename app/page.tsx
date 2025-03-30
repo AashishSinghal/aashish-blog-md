@@ -6,7 +6,9 @@ import { Badge } from "@/components/ui/badge"
 import { getAllPosts } from "@/lib/blog"
 import { AnimatedText } from "@/components/animated-text"
 
-export default function Home() {
+// Make this a server component that fetches data on the server
+export default async function Home() {
+  // Since this is a server component, we can use the server-side function directly
   const posts = getAllPosts().slice(0, 6) // Get the 6 most recent posts
 
   return (

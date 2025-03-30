@@ -3,7 +3,9 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { getAllPosts } from "@/lib/blog"
 
-export default function BlogPage() {
+// Make this a server component that fetches data on the server
+export default async function BlogPage() {
+  // Since this is a server component, we can use the server-side function directly
   const posts = getAllPosts()
 
   return (

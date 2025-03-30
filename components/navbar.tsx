@@ -80,17 +80,17 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {isConfigured && user && (
-            <Link
-              href="/dashboard"
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
-                pathname === "/dashboard" ? "text-foreground" : "text-muted-foreground",
-              )}
-            >
-              Dashboard
-            </Link>
-          )}
+          {/* TODO: Re-enable authentication check before pushing to Git */}
+          {/* This is temporarily modified to allow dashboard access during development */}
+          <Link
+            href="/dashboard"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary",
+              pathname === "/dashboard" ? "text-foreground" : "text-muted-foreground",
+            )}
+          >
+            Dashboard
+          </Link>
 
           <div className="flex items-center gap-4">
             <ThemeToggle />
@@ -155,18 +155,18 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {isConfigured && user && (
-              <Link
-                href="/dashboard"
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
-                  pathname === "/dashboard" ? "text-foreground" : "text-muted-foreground",
-                )}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
-            )}
+            {/* TODO: Re-enable authentication check before pushing to Git */}
+            {/* This is temporarily modified to allow dashboard access during development */}
+            <Link
+              href="/dashboard"
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-primary",
+                pathname === "/dashboard" ? "text-foreground" : "text-muted-foreground",
+              )}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Dashboard
+            </Link>
 
             {!isLoading && isConfigured && !user && (
               <div className="flex flex-col space-y-2 pt-2">

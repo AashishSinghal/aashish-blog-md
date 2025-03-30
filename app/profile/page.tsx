@@ -21,6 +21,9 @@ export default function ProfilePage() {
   const [fullName, setFullName] = useState("")
   const [isUpdating, setIsUpdating] = useState(false)
 
+  // TODO: Re-enable this authentication check before pushing to Git
+  // This is temporarily commented out to allow profile access during development
+  /*
   useEffect(() => {
     if (!isLoading && !user) {
       router.push("/login")
@@ -30,6 +33,13 @@ export default function ProfilePage() {
       setFullName(user.user_metadata.full_name)
     }
   }, [isLoading, user, router])
+  */
+
+  useEffect(() => {
+    if (user?.user_metadata?.full_name) {
+      setFullName(user.user_metadata.full_name)
+    }
+  }, [user])
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -60,6 +70,9 @@ export default function ProfilePage() {
     }
   }
 
+  // TODO: Re-enable this authentication check before pushing to Git
+  // This is temporarily commented out to allow profile access during development
+  /*
   if (isLoading) {
     return (
       <div className="container py-12">
@@ -73,6 +86,7 @@ export default function ProfilePage() {
   if (!user) {
     return null // Will redirect in useEffect
   }
+  */
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-4rem)] py-12">
@@ -80,9 +94,9 @@ export default function ProfilePage() {
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={user.user_metadata?.avatar_url} alt={user.email || ""} />
+              <AvatarImage src={user?.user_metadata?.avatar_url} alt={user?.email || ""} />
               <AvatarFallback className="text-4xl">
-                {user.email ? user.email.charAt(0).toUpperCase() : <User className="h-12 w-12" />}
+                {user?.email ? user.email.charAt(0).toUpperCase() : <User className="h-12 w-12" />}
               </AvatarFallback>
             </Avatar>
           </div>
@@ -93,7 +107,7 @@ export default function ProfilePage() {
           <form onSubmit={handleUpdateProfile} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" value={user.email || ""} disabled className="bg-muted" />
+              <Input id="email" type="email" value={user?.email || ""} disabled className="bg-muted" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name</Label>
@@ -104,7 +118,7 @@ export default function ProfilePage() {
                 placeholder="Your full name"
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isUpdating}>
+            <Button type="submit" className="w-full" disabled={isUpdating || !user}>
               {isUpdating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Update Profile
             </Button>

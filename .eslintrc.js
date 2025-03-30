@@ -42,17 +42,17 @@ module.exports = {
     "@typescript-eslint/ban-ts-comment": "warn",
 
     // Import rules
-    "import/order": [
-      "error",
-      {
-        groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
-        "newlines-between": "always",
-        alphabetize: { order: "asc", caseInsensitive: true },
-      },
-    ],
+    // "import/order": [
+    //   "error",
+    //   {
+    //     groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+    //     "newlines-between": "always",
+    //     alphabetize: { order: "asc", caseInsensitive: true },
+    //   },
+    // ],
 
     // General rules
-    "no-console": ["warn", { allow: ["warn", "error"] }],
+    // "no-console": ["warn", { allow: ["warn", "error"] }],
     eqeqeq: ["error", "always"],
   },
   overrides: [

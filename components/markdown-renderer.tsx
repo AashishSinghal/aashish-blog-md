@@ -1,16 +1,41 @@
 "use client"
+import { useState, useEffect } from "react"
 import ReactMarkdown from "react-markdown"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism"
 import remarkGfm from "remark-gfm"
 import Image from "next/image"
 import Link from "next/link"
+
+// Lazy load the syntax highlighter to avoid SSR issues
+import dynamic from "next/dynamic"
+
+// Dynamically import the syntax highlighter components
+const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter").then((mod) => mod.Prism), {
+  ssr: false,
+  loading: () => (
+    <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
+      <code>Loading syntax highlighter...</code>
+    </pre>
+  ),
+})
+
+const vscDarkPlus = dynamic(
+  () => import("react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus").then((mod) => mod.default),
+  { ssr: false },
+)
 
 interface MarkdownRendererProps {
   content: string
 }
 
 export function MarkdownRenderer({ content }: MarkdownRendererProps) {
+  // State to track if the component is mounted (client-side)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Set mounted state after component mounts
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -47,16 +72,40 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
         ),
         code: ({ node, inline, className, children, ...props }) => {
           const match = /language-(\w+)/.exec(className || "")
-          return !inline && match ? (
-            <div className="my-6 rounded-lg overflow-hidden">
-              <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div" className="rounded-lg" {...props}>
-                {String(children).replace(/\n$/, "")}
-              </SyntaxHighlighter>
-            </div>
-          ) : (
-            <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
-              {children}
-            </code>
+
+          // For inline code
+          if (inline) {
+            return (
+              <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
+                {children}
+              </code>
+            )
+          }
+
+          // For code blocks
+          if (match && isMounted) {
+            return (
+              <div className="my-6 rounded-lg overflow-hidden">
+                <SyntaxHighlighter
+                  style={vscDarkPlus}
+                  language={match[1]}
+                  PreTag="div"
+                  className="rounded-lg"
+                  {...props}
+                >
+                  {String(children).replace(/\n$/, "")}
+                </SyntaxHighlighter>
+              </div>
+            )
+          }
+
+          // Fallback for non-mounted state or no language specified
+          return (
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-6">
+              <code className="text-sm font-mono" {...props}>
+                {children}
+              </code>
+            </pre>
           )
         },
         table: ({ node, ...props }) => (
