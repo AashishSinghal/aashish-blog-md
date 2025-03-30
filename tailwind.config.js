@@ -1,9 +1,12 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./blogs/**/*.{md,mdx}",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -24,17 +27,6 @@ module.exports = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          50: "#f0f9ff",
-          100: "#e0f2fe",
-          200: "#bae6fd",
-          300: "#7dd3fc",
-          400: "#38bdf8",
-          500: "#0ea5e9",
-          600: "#0284c7",
-          700: "#0369a1",
-          800: "#075985",
-          900: "#0c4a6e",
-          950: "#082f49",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -143,20 +135,6 @@ module.exports = {
             },
           },
         },
-        lg: {
-          css: {
-            fontSize: "1.125rem",
-            lineHeight: "1.75rem",
-            p: {
-              marginTop: "1.5em",
-              marginBottom: "1.5em",
-            },
-          },
-        },
-      },
-      fontFamily: {
-        sans: ["var(--font-inter)"],
-        mono: ["var(--font-roboto-mono)"],
       },
       keyframes: {
         shimmer: {
